@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Hawkins High — Clubs</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+
+    <style>
+        :root{
+            --primary-red: #8b0000;
+            --bg-dark: #0a0a0a;
+            --card-bg: #1a0a0a;
+            --highlight: #ff3c3c;
+        }
+        body{
+            background: var(--bg-dark);
+            font-family: Arial, sans-serif;
+            color: #f5f5f5;
+        }
+        .navbar{ background: var(--primary-red); }
+        .navbar-brand, .nav-link{ color: var(--highlight) !important; font-weight: bold; }
+        .nav-link.active{ color: #ff9900 !important; }
+        .page-title{ color: var(--highlight); margin-bottom: .25rem; }
+        .title-underline{ border-top: 3px solid var(--highlight); width: 80px; margin: 12px auto 24px; }
+        label{ font-weight: 700; color: var(--highlight); }
+        .form-select{ border: 1px solid var(--highlight); padding: .6rem; background: #1a0a0a; color: #f5f5f5; }
+        .btn-custom{
+            background: var(--primary-red);
+            color: #fff;
+            width: 100%;
+            padding: .6rem;
+            font-weight: 700;
+            border: none;
+        }
+        .btn-custom:hover{ background: #7a0000; color: #fff; }
+        #club-info-card{
+            background: var(--card-bg);
+            padding: 22px;
+            border-radius: 8px;
+            margin-top: 24px;
+            border-left: 6px solid var(--primary-red);
+            display: none;
+        }
+        .info-line{ margin-bottom: .5rem; }
+        .badge-featured{
+            background: var(--primary-red);
+            color: #fff;
+            padding: .25rem .5rem;
+            border-radius: .25rem;
+            font-size: .85rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">Hawkins High</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="gwa.html">GWA Calculator</a></li>
+                <li class="nav-item"><a class="nav-link active" href="club information.html">Clubs</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5" style="max-width:900px;">
+    <div class="text-center">
+        <h1 class="page-title">School Club Information</h1>
+        <div class="title-underline" aria-hidden="true"></div>
+        <p class="mb-0">Choose a club to view details — Hawkins High supports both academic and athletic clubs.</p>
+    </div>
+
+    <div class="row mt-4 gx-4">
+        <div class="col-md-6">
+            <label for="clubSelect">Select a club</label>
+            <select id="clubSelect" class="form-select" aria-label="Select club">
+                <option value="art">ART</option>
+                <option value="soccer">SOCCER</option>
+                <option value="volleyball">VOLLEYBALL</option>
+                <option value="basketball">BASKETBALL</option>
+                <option value="chess">CHESS</option>
+                <option value="swimming">SWIMMING</option>
+                <option value="esports">ESPORTS</option>
+            </select>
+        </div>
+
+        <div class="col-md-6 d-flex align-items-end">
+            <button class="btn-custom" id="showBtn" type="button">Show Club Information</button>
+        </div>
+    </div>
+
+    <div id="club-info-card" role="region" aria-live="polite"></div>
+</div>
+
+<script>
+    const clubData = {
+        art: {
+            name: "ART Club",
+            description: "Explore creativity through painting, sculpture, and digital arts.",
+            meeting: "Mon & Thu • 3:30 PM – 5:00 PM",
+            location: "Art Room",
+            advisor: "ELEVEN",
+            members: 15,
+            category: "Non Academic"
+        },
+        soccer: {
+            name: "SOCCER Club",
+            description: "Develop soccer skills, teamwork, and participate in inter-school matches.",
+            meeting: "Tue & Fri • 4:00 PM – 6:00 PM",
+            location: "Soccer Field",
+            advisor: "LUCAS",
+            members: 20,
+            category: "Non Academic"
+        },
+        volleyball: {
+            name: "VOLLEYBALL Club",
+            description: "Practice volleyball techniques and compete in school tournaments.",
+            meeting: "Wed & Fri • 4:00 PM – 6:00 PM",
+            location: "Gym",
+            advisor: "MAX",
+            members: 18,
+            category: "Non Academic"
+        },
+        basketball: {
+            name: "BASKETBALL Club",
+            description: "Intensive training for skill improvement and inter-school competitions.",
+            meeting: "Mon, Wed & Fri • 4:00 PM – 6:00 PM",
+            location: "Gym",
+            advisor: "STEVE",
+            members: 22,
+            category: "Non-Academic"
+        },
+        chess: {
+            name: "CHESS Club",
+            description: "Learn strategy and logic through workshops and competitive matches.",
+            meeting: "Thu • 1:00 PM – 3:00 PM",
+            location: "Library",
+            advisor: "DUSTIN",
+            members: 12,
+            category: "Academic"
+        },
+        swimming: {
+            name: "SWIMMING Club",
+            description: "Develop swimming techniques and participate in swim meets.",
+            meeting: "Tue & Thu • 3:30 PM – 5:00 PM",
+            location: "Swimming Pool",
+            advisor: "WILL",
+            members: 16,
+            category: "Non Academic"
+        },
+        esports: {
+            name: "ESPORTS Club",
+            description: "Competitive gaming club focusing on strategy and teamwork.",
+            meeting: "Wed • 3:30 PM – 5:00 PM",
+            location: "Computer Lab",
+            advisor: "ELEVEN",
+            members: 14,
+            category: "Academic"
+        }
+    };
+
+    const card = document.getElementById('club-info-card');
+    const select = document.getElementById('clubSelect');
+    const btn = document.getElementById('showBtn');
+
+    function renderClubInfo(key){
+        const c = clubData[key];
+        const highlight = (["basketball","soccer","volleyball"].includes(key)) ? `<span class="badge-featured">Featured</span>` : '';
+        card.innerHTML = `
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <h3 class="mb-0">${c.name} ${highlight}</h3>
+                <small class="text-muted">Category: <strong>${c.category}</strong></small>
+            </div>
+            <p class="info-line">${c.description}</p>
+            <p class="info-line"><strong>Advisor:</strong> ${c.advisor}</p>
+            <p class="info-line"><strong>Meeting Time:</strong> ${c.meeting}</p>
+            <p class="info-line"><strong>Location:</strong> ${c.location}</p>
+            <p class="info-line"><strong>Number of Members:</strong> ${c.members}</p>
+        `;
+        card.style.display = 'block';
+        card.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }
+
+    btn.addEventListener('click', ()=> renderClubInfo(select.value));
+    select.addEventListener('change', ()=> renderClubInfo(select.value));
+    document.addEventListener('DOMContentLoaded', ()=> {
+        select.value = 'art';
+        renderClubInfo('art');
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
